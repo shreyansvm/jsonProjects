@@ -48,3 +48,22 @@ f = opener.open(req)
 json = json.loads(f.read())
 print json
 print json[0]['title']
+
+print "------------ Posting HTTP request on MOCKBIN --------------"
+import requests
+
+url = "http://mockbin.com/request"
+
+querystring = {"foo":["bar","baz"]}
+
+payload = "{\"foo\": \"bar\"}"
+headers = {
+    'cookie': "foo=bar; bar=baz",
+    'accept': "application/json",
+    'content-type': "application/json",
+    'x-pretty-print': "2"
+    }
+
+response = requests.request("POST", url, data=payload, headers=headers, params=querystring)
+
+print(response.text)
