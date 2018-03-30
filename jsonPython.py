@@ -88,6 +88,14 @@ print mockbinData['log']['entries'][0]['startedDateTime']
 print mockbinData['log']['entries'][0]['clientIPAddress']
 print mockbinData['log']['entries'][0]['request']['postData']
 
+for entry in mockbinData['log']['entries']:
+    print entry['clientIPAddress']
+    print entry['startedDateTime']
+    print entry['request']['method']
+    print entry['request']['postData']
+    print entry['request']['postData']['params']
+    for param in entry['request']['postData']['params']:
+        print param
 
 # with open('testJson.json') as data_file:
 #     data = json.load(data_file)
