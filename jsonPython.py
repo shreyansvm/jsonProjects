@@ -52,18 +52,44 @@ print json[0]['title']
 print "------------ Posting HTTP request on MOCKBIN --------------"
 import requests
 
-url = "http://mockbin.com/request"
+url = "https://requestloggerbin.herokuapp.com/bin/2d892377-0f30-4125-86b8-1967853f236a"
 
 querystring = {"foo":["bar","baz"]}
 
-payload = "{\"foo\": \"bar\"}"
+payload = "foo=bar&bar=baz"
 headers = {
     'cookie': "foo=bar; bar=baz",
     'accept': "application/json",
-    'content-type': "application/json",
-    'x-pretty-print': "2"
+    'content-type': "application/x-www-form-urlencoded"
     }
 
 response = requests.request("POST", url, data=payload, headers=headers, params=querystring)
 
 print(response.text)
+
+print "------------ Reading HTTP posts from MOCKBIN --------------"
+import json
+#queryUrl = 'https://requestloggerbin.herokuapp.com/bin/<id>/log'
+queryUrl = 'https://requestloggerbin.herokuapp.com/bin/2d892377-0f30-4125-86b8-1967853f236a/log'
+
+result = urllib2.urlopen(queryUrl).read()
+file = open('testJson2.json','w')
+file.write(result)
+file.close()
+with open('testJson2.json') as data_file:
+    mockbinData = json.load(data_file)
+
+print mockbinData
+print mockbinData['log']
+print mockbinData['log']['entries']
+print mockbinData['log']['entries'][0]
+print mockbinData['log']['entries'][0]['request']
+print mockbinData['log']['entries'][0]['startedDateTime']
+print mockbinData['log']['entries'][0]['clientIPAddress']
+print mockbinData['log']['entries'][0]['request']['postData']
+
+
+# with open('testJson.json') as data_file:
+#     data = json.load(data_file)
+# print data
+# print data['log']
